@@ -15,18 +15,18 @@ class Main {
         while (!queue.isEmpty()) {
             int cur = queue.poll();
 
-            for (int next = 1; next <= N; next++) {
-                if (adj[cur][next] == 1 && !visited[next]) {
-                    queue.add(next);
-                    visited[next] = true;
-                    distance[next] = distance[cur] + 1;
-                    if (next == target) {
-                        return distance[next];
+            for (int i=1; i<=N; i++) {
+                if (adj[cur][i] == 1 && !visited[i]) {
+                    queue.add(i);
+                    visited[i] = true;
+                    distance[i] = distance[cur] + 1;
+                    if (i == target) {
+                        return distance[i];
                     }
                 }
             }
         }
-        return Integer.MAX_VALUE;
+        return 0;
     }
 
     public static void main(String[] args) {
