@@ -1,30 +1,29 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
-// 1~n까지의 수 중 r개를 선택하여 순열
 public class Main {
     static int N, K;
     static int[][] belt;
 
     static void rotate() {
-        int lastItem[] = belt[2*N-1];
+        int[] lastItem = belt[2*N-1];
         for (int i=2*N-1; i>=1; i--) belt[i] = belt[i-1];
         belt[0] = lastItem;
     }
 
     static void move() {
         for (int i=2*N-1; i>=0; i--) {
+            
+            // 이동하려는 로봇이 끝에 다다랐으면 그대로 하차
             if (i == N-1 && belt[i][1] == 1) {
                 belt[i][1] = 0;
+                continue;
             }
-
-            if (belt[i][1] == 1) { // 로봇이 존재
-                // 그 다음 칸 내구성이 1이상이고, 그 다음 칸 로봇이 없으면
-                if (belt[(i + 1) % (2 * N)][0] >= 1 && belt[(i + 1) % (2 * N)][1] == 0) {
-                    belt[i][1] = 0; // 이동 전의 칸 로봇 상태 없애기
-                    belt[(i + 1) % (2 * N)][1] = 1; // 이동한 칸에 로봇 상태 추가
-                    belt[(i + 1) % (2 * N)][0]--; // 내구성 1감소
-                }
+            
+            // 로봇이 존재하고, 그 다음 칸 내구성이 1이상이면서 로봇이 없으면,
+            if (belt[i][1] == 1 && belt[(i + 1) % (2 * N)][0] >= 1 && belt[(i + 1) % (2 * N)][1] == 0) {
+                belt[i][1] = 0; // 이동 전의 칸 로봇 상태 없애기
+                belt[(i + 1) % (2 * N)][1] = 1; // 이동한 칸에 로봇 상태 추가
+                belt[(i + 1) % (2 * N)][0]--; // 내구성 1감소
             }
         }
     }
