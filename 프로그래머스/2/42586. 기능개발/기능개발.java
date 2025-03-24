@@ -2,45 +2,28 @@ import java.util.*;
 
 class Solution {
     public List<Integer> solution(int[] progresses, int[] speeds) {
-        int[] answer = new int[progresses.length];
-        int[] days = new int[progresses.length];
+        int len = progresses.length;
+        int[] days = new int[len];
         
-        int cnt = 1;
-        while (!check(progresses)) {
-            cnt++;
-            for (int i=0; i<progresses.length; i++) {
-                progresses[i] += speeds[i];
-                if (progresses[i] >= 100) {
-                    continue;
-                }
-                days[i] = cnt;
-            }
+        for (int i=0; i<len; i++) {
+            int day = (100-progresses[i]) / speeds[i];
+            int flag = (100-progresses[i]) % speeds[i];
+            days[i] = flag == 0 ? day : day+1;
         }
+        
         int maxDay = Integer.MIN_VALUE;
-        List<Integer> arr = new ArrayList<>();
-        int idx = 0;
+        List<Integer> answer = new ArrayList<>();
         for (int day : days) {
             if (day > maxDay) {
                 maxDay = day;
-                arr.add(1);
+                answer.add(1);
             }
             else {
-                int num = arr.get(idx);
-                arr.set(idx, ++num);
-            }
-            idx = arr.size() - 1;
-            
-        }
-        System.out.println(arr.toString());
-        return arr;
-    }
-    
-    static boolean check(int[] progresses) {
-        for (int p : progresses) {
-            if (p < 100) {
-                return false;
+                int num = answer.get(answer.size()-1)+1;
+                answer.set(answer.size()-1, num);
             }
         }
-        return true;
+        return answer;
     }
+
 }
