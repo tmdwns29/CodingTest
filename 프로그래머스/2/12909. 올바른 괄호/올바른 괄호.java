@@ -3,25 +3,15 @@ import java.util.*;
 class Solution {
     boolean solution(String s) {
         boolean answer = true;
-        char[] arr = s.toCharArray();
-        Stack<Character> stack = new Stack<>();
-        
-        for (int i=0; i<arr.length; i++) {
-            if (arr[i] == '(') {
-                stack.push('(');
-            }
-            else {
-                if (i == 0) return false;
-                char c = ' ';
-                if (!stack.isEmpty()) {
-                    c = stack.pop();
-                }
-                if (c == '(') continue;
-                if (c == ' ') return false;
-                
+        int cnt = 0;
+        for (int i=0; i<s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                cnt++;
+            } else {
+                if (cnt == 0) return false;
+                cnt--;
             }
         }
-
-        return stack.isEmpty();
+        return cnt == 0;
     }
 }
