@@ -14,7 +14,7 @@ class Solution {
             sum2 += q2;
             que2.add(q2);
         }
-        while (sum1 != sum2 && answer <= 300_000) {
+        while (sum1 != sum2 && answer <= queue1.length*3) {
             if (sum1 > sum2) {
                 long c = que1.poll();
                 que2.add(c);
